@@ -136,6 +136,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3.1.0
+    - name: Clean CMake cache
+      run: |
+        rm -rf /home/runner/work/esp-at-8285/esp-at-8285/build/*
+        rm -f /home/runner/work/esp-at-8285/esp-at-8285/CMakeCache.txt
     - name: clone esp-idf
       env:
         AT_OTA_TOKEN_WROOM_02_1024_1024: ${{ secrets.AT_OTA_TOKEN_WROOM_02_1024_1024 }}
@@ -169,10 +173,6 @@ jobs:
         IDF_PATH: ${{ github.workspace }}/esp-idf
       run: |
         python -m pip install --user -r /home/runner/work/esp-at-8285/esp-at-8285/esp-idf/requirements.txt
-    - name: Clean CMake cache
-      run: |
-        rm -rf /home/runner/work/esp-at-8285/esp-at-8285/build/*
-        rm -f /home/runner/work/esp-at-8285/esp-at-8285/CMakeCache.txt
     - name: Compiling
       run: |
         export ESP_PLATFORM=PLATFORM_ESP8266
